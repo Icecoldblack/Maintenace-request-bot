@@ -2,10 +2,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
 
 # --- CONFIGURATION: EDIT THIS SECTION ---
 URL = "https://georgiastate.webtma.com/?tkn=DNB9KTKAgMy8J17B-fF_PD1ZF5hBKsNY8w44e7eHPwZCBx9SEU6fuYTm_2q90bRPDSPtMCXVpA9s3KONRjNdwrPOM8EluoOLA86MDBY9cfgzuMTFiYpvgh3um10KQ6zghYvKLqjvSbDR3EniI8Tb6QPrtho_zCcK4HPs3BWip3pvGjipYmOCYEkYEqBbpjHAdD35aw5m4V30t5YVv4Ot6JLTqXq9QUQgdT74-PuVK7V6N_0bnJv0ClbkZR1WyXJGeRiosl_BY1kPu2iNAdOMtTb-SwrE5chY-iXnVKl00x8"
@@ -94,7 +92,7 @@ def fill_text_field(driver, xpath, value):
 
 def main():
     # Setup Chrome driver
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver = webdriver.Chrome()
     
     try:
         print("Opening WebTMA form...")
