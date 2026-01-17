@@ -19,7 +19,7 @@ USER_DATA = {
     "building": "Patton Hall",
     "floor": "",  # Leave empty if not needed
     "room": "307",
-    "request_type": "",  # Leave empty to skip, or enter exact text like "Maintenance"
+    "request_type": "Maintenance Request",  # Leave empty to skip, or enter exact text like "Maintenance"
     "action_requested": "The smoke detector keeps beeping and going off"
 }
 
@@ -108,44 +108,44 @@ def main():
         time.sleep(2)  # Extra wait for Kendo UI to initialize
 
         # 1. Name Field (Kendo Dropdown)
-        print("\n--- Filling Name ---")
+        print("\n Filling Name")
         fill_kendo_dropdown(driver, SELECTORS["name_input"], USER_DATA["name"])
 
         # 2. Email (Standard Text Input)
-        print("\n--- Filling Email ---")
+        print("\n Filling Email")
         fill_text_field(driver, SELECTORS["email_input"], USER_DATA["email"])
 
         # 3. Phone (Standard Text Input)
-        print("\n--- Filling Phone ---")
+        print("\n Filling Phone")
         fill_text_field(driver, SELECTORS["phone_input"], USER_DATA["phone"])
 
         # 4. Facility (Kendo Dropdown)
-        print("\n--- Filling Facility ---")
+        print("\n Filling Facility")
         fill_kendo_dropdown(driver, SELECTORS["facility_input"], USER_DATA["facility"])
         time.sleep(2)  # Wait for building list to potentially update
 
         # 5. Building (Kendo Dropdown)
-        print("\n--- Filling Building ---")
+        print("\n Filling Building")
         fill_kendo_dropdown(driver, SELECTORS["building_input"], USER_DATA["building"])
         time.sleep(2)
 
         # 6. Floor (Kendo Dropdown) - Optional
         if USER_DATA["floor"]:
-            print("\n--- Filling Floor ---")
+            print("\n Filling Floor")
             fill_kendo_dropdown(driver, SELECTORS["floor_input"], USER_DATA["floor"])
             time.sleep(1)
 
         # 7. Room (Kendo Dropdown)
-        print("\n--- Filling Room ---")
+        print("\n Filling Room")
         fill_kendo_dropdown(driver, SELECTORS["room_input"], USER_DATA["room"])
 
         # 8. Request Type (Kendo Dropdown) - Optional
         if USER_DATA["request_type"]:
-            print("\n--- Filling Request Type ---")
+            print("\n Filling Request Type")
             fill_kendo_dropdown(driver, SELECTORS["request_type_input"], USER_DATA["request_type"])
 
         # 9. Action Requested (Text Area)
-        print("\n--- Filling Action Requested ---")
+        print("\n Filling Action Requested")
         fill_text_field(driver, SELECTORS["action_input"], USER_DATA["action_requested"])
 
         # 10. Scroll down to make the Save button visible
@@ -157,14 +157,14 @@ def main():
         print("="*50)
         print("\n  NOTE: There is a reCAPTCHA on this form.")
         print("You will need to complete the CAPTCHA manually before clicking Save.")
-        print("\nThe browser will stay open for 60 seconds so you can:")
+        print("\nThe browser will stay open for 10 seconds so you can:")
         print("  1. Verify the filled fields are correct")
         print("  2. Complete the reCAPTCHA")
         print("  3. Click the Save button manually")
         print("="*50)
         
         # Keep browser open for manual review and CAPTCHA completion
-        time.sleep(60)
+        time.sleep(10)
 
     except Exception as e:
         print(f"\n An error occurred: {e}")
