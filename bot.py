@@ -12,13 +12,13 @@ URL = "https://georgiastate.webtma.com/?tkn=DNB9KTKAgMy8J17B-fF_PD1ZF5hBKsNY8w44
 USER_DATA = {
     "name": "Uyiosa Nehikhuere",
     "email": "unehikhuere1@students.gsu.edu",
-    "phone": "678-296-0519",
+    "phone": "", #this is not needed dont have too put it
     "facility": "Patton Hall",
     "building": "Patton Hall",
     "floor": "",  # Leave empty if not needed
-    "room": "307",
+    "room": "327",
     "request_type": "Maintenance Request",  # Leave empty to skip, or enter exact text like "Maintenance"
-    "action_requested": "The smoke detector keeps beeping and going off"
+    "action_requested": "my room is freezing please can you fix it too about 73 degrees"
 }
 
 # XPATH SELECTORS (using aria-label attributes since IDs are not available)
@@ -90,8 +90,8 @@ def fill_text_field(driver, xpath, value):
         print(f"Could not fill text field: {e}")
 
 
-def main():
-    # Setup Chrome driver
+def run_single_submission():
+    """Run a single form submission."""
     driver = webdriver.Chrome()
     
     try:
@@ -150,28 +150,62 @@ def main():
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1)
 
+        # 11. Auto-click the Save button
+        print("\n Clicking Save button...")
+        save_button = wait.until(EC.element_to_be_clickable((By.XPATH, SELECTORS["save_button"])))
+        save_button.click()
+        
         print("\n" + "="*50)
-        print("Form filled successfully!")
-        print("="*50)
-        print("\n  NOTE: There is a reCAPTCHA on this form.")
-        print("You will need to complete the CAPTCHA manually before clicking Save.")
-        print("\nThe browser will stay open for 10 seconds so you can:")
-        print("  1. Verify the filled fields are correct")
-        print("  2. Complete the reCAPTCHA")
-        print("  3. Click the Save button manually")
+        print("Form submitted!")
         print("="*50)
         
-        # Keep browser open for manual review and CAPTCHA completion
-        time.sleep(10)
+        # Wait a moment to let the submission process
+        time.sleep(3)
+        
+        return True
 
     except Exception as e:
         print(f"\n An error occurred: {e}")
         import traceback
         traceback.print_exc()
-        time.sleep(10)  # Keep open to see the error
+        return False
     finally:
         driver.quit()
-        print("\nBrowser closed.")
+        print("Browser closed.")
+
+
+def main():
+    """Main loop - runs continuously until stopped with Ctrl+C."""
+    submission_count = 0
+    delay_between_submissions = 10  # seconds
+    
+    print("="*50)
+    print("AUTO-SUBMIT BOT STARTED")
+    print("Press Ctrl+C to stop")
+    print("="*50)
+    
+    try:
+        while True:
+            submission_count += 1
+            print(f"\n{'='*50}")
+            print(f"SUBMISSION #{submission_count}")
+            print(f"{'='*50}")
+            
+            success = run_single_submission()
+            
+            if success:
+                print(f"\n Submission #{submission_count} completed!")
+            else:
+                print(f"\n Submission #{submission_count} failed, retrying...")
+            
+            print(f"\n Waiting {delay_between_submissions} seconds before next submission...")
+            time.sleep(delay_between_submissions)
+            
+    except KeyboardInterrupt:
+        print("\n\n" + "="*50)
+        print(f"BOT HAS STOPPED")
+        print(f"Total submissions attempted: {submission_count}")
+        print("="*50)
 
 
 if __name__ == "__main__":
